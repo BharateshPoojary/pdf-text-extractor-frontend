@@ -9,7 +9,7 @@ export default function Home() {
   const [BankStatement, setBankStatement] = useState<BankStatement[]>([])
   const [status, setStatus] = useState<BankStatementResponse["status"] | null>(null)
   return (
-    <div className=" flex w-full p-5">
+    <div className=" flex flex-col w-full p-5">
       <InputFile setBankStatement={setBankStatement} 
         setStatus={setStatus}
 status={status}
