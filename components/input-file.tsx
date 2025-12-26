@@ -1,13 +1,13 @@
 "use client"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Button } from "../ui/button"
+import { Button } from "./ui/button"
 import { useEffect, useState } from "react"
 import toast from "react-hot-toast"
 import axios, { AxiosResponse, isAxiosError } from "axios"
 import { BankStatement, BankStatementResponse, UploadApiResponse } from "@/types/response"
 
-export function InputFile({ setBankStatement, setStatus, status }: { setBankStatement: (val: BankStatement[]) => void, setStatus: (val: BankStatementResponse["status"]) => void, status: BankStatementResponse["status"]  | null}) {
+export function InputFile({ setBankStatement, setStatus, status }: { setBankStatement: (val: BankStatement[]) => void, setStatus: (val: BankStatementResponse["status"]) => void, status: BankStatementResponse["status"] | null }) {
     const [file, setFile] = useState<File | null>(null)
 
     const [jobId, setJobId] = useState<string | null>(null)
