@@ -2,15 +2,17 @@
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Button } from "./ui/button"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import toast from "react-hot-toast"
 import axios, { AxiosResponse, isAxiosError } from "axios"
 import { BankStatement, BankStatementResponse, UploadApiResponse } from "@/types/response"
+import { Trash2 } from "lucide-react"
 
 export function InputFile({ setBankStatement, setStatus, status }: { setBankStatement: (val: BankStatement[]) => void, setStatus: (val: BankStatementResponse["status"]) => void, status: BankStatementResponse["status"] | null }) {
     const [file, setFile] = useState<File | null>(null)
 
     const [jobId, setJobId] = useState<string | null>(null)
+    const fileInputRef = useRef<HTMLInputElement>(null)
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const selectedFile = e.target.files?.[0]
@@ -18,7 +20,12 @@ export function InputFile({ setBankStatement, setStatus, status }: { setBankStat
             setFile(selectedFile)
         }
     }
-
+    const handleClearFile = () => {
+        setFile(null)
+        if (fileInputRef.current) {
+            fileInputRef.current.value = ""
+        }
+    }
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
 
@@ -81,7 +88,6 @@ export function InputFile({ setBankStatement, setStatus, status }: { setBankStat
                 if (getBankStatements.data.status === "FAILED") {
                     toast.error("Failed to process pdf")
                     setStatus("FAILED")
-
                     clearInterval(interval);
                 }
 
@@ -101,15 +107,23 @@ export function InputFile({ setBankStatement, setStatus, status }: { setBankStat
             <form onSubmit={handleSubmit} className="space-y-3">
                 <div>
                     <Label htmlFor="pdf-file" className="py-1 my-2">Select File to Extract</Label>
-                    <Input
-                        id="pdf-file"
-                        name="pdf-file"
-                        type="file"
-                        className="cursor-pointer"
-                        onChange={handleFileChange}
-                        accept=".pdf"
-                        disabled={status === "PROCESSING"}
-                    />
+                    <div className="flex space-x-2 items-center">
+
+
+                        <Input
+                            ref={fileInputRef}
+                            id="pdf-file"
+                            name="pdf-file"
+                            type="file"
+                            className="cursor-pointer"
+                            onChange={handleFileChange}
+                            accept=".pdf"
+                            disabled={status === "PROCESSING"}
+                        />
+                        {file &&
+                            <Trash2 color="red" onClick={handleClearFile} />
+                        }
+                    </div>
                 </div>
                 <Button
                     type="submit"
