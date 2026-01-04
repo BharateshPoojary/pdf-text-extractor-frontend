@@ -66,6 +66,11 @@ export function InputFile({ setBankStatement, setStatus, status }: { setBankStat
                 console.error("Error processing file:", error)
                 toast.error("Error processing file")
             }
+        } finally {
+            setFile(null)
+            if (fileInputRef.current) {
+                fileInputRef.current.value = ""
+            }
         }
     }
     useEffect(() => {
@@ -102,6 +107,7 @@ export function InputFile({ setBankStatement, setStatus, status }: { setBankStat
             clearInterval(interval);
         };
     }, [jobId]);
+    console.log("STATUS",status)
     return (
         <div className="grid w-full items-start gap-3 justify-start">
             <form onSubmit={handleSubmit} className="space-y-3">
@@ -120,7 +126,7 @@ export function InputFile({ setBankStatement, setStatus, status }: { setBankStat
                             accept=".pdf"
                             disabled={status === "PROCESSING"}
                         />
-                        {file &&
+                        {(file && (status !== "PROCESSING")) &&
                             <Trash2 color="red" onClick={handleClearFile} />
                         }
                     </div>
