@@ -39,11 +39,11 @@ export function InputFile({ setBankStatement, setStatus, status }: { setBankStat
 
         try {
             const formData = new FormData()
-            formData.append("pdf-file", file)
+            formData.append("file", file)
 
 
             const response: AxiosResponse<UploadApiResponse> = await axios.post(
-                "https://pdf-text-extractor-backend.vercel.app/api/uploadfile",
+                "https://nest-backend-pdf-extractor.vercel.app/upload",
                 formData,
                 {
                     headers: {
@@ -79,7 +79,7 @@ export function InputFile({ setBankStatement, setStatus, status }: { setBankStat
         const interval = setInterval(async () => {
             try {
                 const getBankStatements: AxiosResponse<BankStatementResponse> =
-                    await axios.get(`https://pdf-text-extractor-backend.vercel.app/api/notify/${jobId}`);
+                    await axios.get(`https://nest-backend-pdf-extractor.vercel.app/${jobId}`);
 
                 // Check if job is complete and stop polling
                 if (getBankStatements.data.status === 'COMPLETED') {
@@ -107,7 +107,7 @@ export function InputFile({ setBankStatement, setStatus, status }: { setBankStat
             clearInterval(interval);
         };
     }, [jobId]);
-    console.log("STATUS",status)
+    console.log("STATUS", status)
     return (
         <div className="grid w-full items-start gap-3 justify-start">
             <form onSubmit={handleSubmit} className="space-y-3">
