@@ -1,5 +1,6 @@
 {
   "name": "pdf-text-extractor-frontend",
+  "packageManager": "pnpm@10.28.2",
   "version": "0.1.0",
   "private": true,
   "scripts": {

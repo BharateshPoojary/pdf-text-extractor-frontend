@@ -43,7 +43,7 @@ export function InputFile({ setBankStatement, setStatus, status }: { setBankStat
 
 
             const response: AxiosResponse<UploadApiResponse> = await axios.post(
-                "https://nest-backend-pdf-extractor.vercel.app/upload",
+                `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}upload`,
                 formData,
                 {
                     headers: {
@@ -66,8 +66,10 @@ export function InputFile({ setBankStatement, setStatus, status }: { setBankStat
                 console.error("Error processing file:", error)
                 toast.error("Error processing file")
             }
+            setStatus("FAILED")
         } finally {
             setFile(null)
+
             if (fileInputRef.current) {
                 fileInputRef.current.value = ""
             }
@@ -79,7 +81,7 @@ export function InputFile({ setBankStatement, setStatus, status }: { setBankStat
         const interval = setInterval(async () => {
             try {
                 const getBankStatements: AxiosResponse<BankStatementResponse> =
-                    await axios.get(`https://nest-backend-pdf-extractor.vercel.app/${jobId}`);
+                    await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}${jobId}`);
 
                 // Check if job is complete and stop polling
                 if (getBankStatements.data.status === 'COMPLETED') {
