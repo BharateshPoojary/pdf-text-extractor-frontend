@@ -1,7 +1,6 @@
 "use client"
 
 import type { BankStatement, BankStatementResponse } from "@/types/response"
-import { cn } from "@/lib/utils"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import MainDataTable from "./common/main-data-table"
 import { expenseColumn } from "./expense-column"

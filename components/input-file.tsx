@@ -114,6 +114,7 @@ export function InputFile({ setBankStatement, setStatus, status }: { setBankStat
         <div className="grid w-full items-start gap-3 justify-start">
             <form onSubmit={handleSubmit} className="space-y-3">
                 <div>
+                    <h1>Welcome</h1>
                     <Label htmlFor="pdf-file" className="py-1 my-2">Select File to Extract</Label>
                     <div className="flex space-x-2 items-center">
 
