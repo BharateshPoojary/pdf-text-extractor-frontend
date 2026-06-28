@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Xtract",
-  description: "Extract text from bank-statment-pdf",
+  description: "OCR based Textract",
 };
 
 export default function RootLayout({
